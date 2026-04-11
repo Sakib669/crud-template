@@ -8,7 +8,7 @@ export default function SignInForm() {
   
   const handleGoogleSignIn = async () => {
     try {
-      await auth.signIn.social({
+      await auth .signIn.social({
     provider: "google",
     callbackURL: window.location.origin,
   });

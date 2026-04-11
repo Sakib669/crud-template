@@ -1,7 +1,8 @@
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createNeonAuth } from "@neondatabase/auth/next/server";
 export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+  baseUrl:
+    "https://ep-bitter-heart-a1ixuf1s.neonauth.ap-southeast-1.aws.neon.tech/neondb/auth", // Your actual URL
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: "T9ooa9nF+Ynnkzj5iSv9kkGmMTA3BvLkMImrGHdHdU=", // Your actual secret
   },
 });

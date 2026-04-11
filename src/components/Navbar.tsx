@@ -1,12 +1,17 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
-import { Home, LogIn, LogInIcon, Sprout } from "lucide-react";
+import { Home, LogIn, LogInIcon, LogOutIcon, Sprout } from "lucide-react";
 import ModeToggle from "./ModeToggle";
+import { auth } from "@/lib/auth/server";
+
+export const dynamic = 'force-dynamic';
 
 interface Props {}
 
-const Navbar = ({}: Props) => {
-  
+const Navbar = async ({}: Props) => {
+  const { data: session } = await auth.getSession();
+  console.log("murgi chor ", session);
+
   return (
     <nav className="sticky top-0 w-full border-b bg-background/95 backdrop:blur supports-backdrop-filter:bg-background/60 z-50">
       <div className="max-w-7xl mx-auto px-4">
@@ -48,16 +53,28 @@ const Navbar = ({}: Props) => {
             <ModeToggle />
 
             {/* sign in button */}
-            <Button
-              variant={"ghost"}
-              className="flex items-center gap-2"
-              asChild
-            >
-              <Link href={"/auth/sign-in"}>
-                <LogInIcon className="w-4 h-4" />
-                <span className="hidden lg:inline">Sign In</span>
-              </Link>
-            </Button>
+            {!session?.user && (
+              <Button
+                variant={"ghost"}
+                className="flex items-center gap-2"
+                asChild
+              >
+                <Link href={"/auth/sign-in"}>
+                  <LogInIcon className="w-4 h-4" />
+                  <span className="hidden lg:inline">Sign In</span>
+                </Link>
+              </Button>
+            )}
+
+            {session?.user && (
+              <div className="flex flex-col gap-2 min-h-screen items-center justify-center bg-gray-900">
+                <h1 className="mb-4 text-xl">
+                  <span className="font-bold underline">
+                    {session.user.name[0]}
+                  </span>
+                </h1>
+              </div>
+            )}
           </div>
         </div>
       </div>
